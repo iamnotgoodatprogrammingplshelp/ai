@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import pyttsx3  # Text-to-Speech
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_absolute_error, mean_squared_error
@@ -50,3 +51,14 @@ plt.show()
 # Print predicted sales
 future_sales_df = pd.DataFrame({"Year": future_years.flatten(), "Predicted Sales": future_sales})
 print(future_sales_df)
+
+# Text-to-Speech Function
+def speak_predictions():
+    engine = pyttsx3.init()
+    message = "Predicted sales for the next 10 years are: "
+    for year, sales in zip(future_sales_df["Year"], future_sales_df["Predicted Sales"]):
+        message += f"Year {year}: {sales:.2f} dollars. "
+    engine.say(message)
+    engine.runAndWait()
+
+speak_predictions()
